@@ -22,31 +22,44 @@ import { Button } from "./ui/button"
 import { DialogClose } from "@radix-ui/react-dialog"
 import { useState } from "react";
 import { TaskType } from "@/lib/types/task";
+import { useTodo } from "@/lib/contexts/todoContext";
 
   type AddTaskModalProps = {
     isModalOpen: boolean,
     onCloseModal: (isOpen: boolean) => void,
-    onSubmitModal: (data: TaskType) => void,
     onOpenModal: (isOpen: boolean) => void,
+    todo?: TaskType,
+    hideTrigger?: boolean,
   }
 
-  export const AddTaskModal = ({ isModalOpen, onCloseModal, onOpenModal, onSubmitModal }: AddTaskModalProps) => {
+  export const AddTaskModal = ({ isModalOpen, onCloseModal, onOpenModal, todo, hideTrigger }: AddTaskModalProps) => {
     const [formData, setFormData] = useState({
-        title: "",
-      status: "",
-      priority: ""
+      title: todo?.title || "",
+      status: todo?.status || "",
+      priority: todo?.priority || "",
     });
+    const { addTask, todoList, setTodoList } = useTodo();
 
     const handleSubmit = (e: React.FormEvent) => {
       e.preventDefault();
-      const data = {
-        id: Math.random().toString(),
+      const data: TaskType = {
+        id: todo?.id || "",
         title: formData.title,
         status: formData.status,
         priority: formData.priority
-    }
-      onSubmitModal(data);
+      }
+      if(todo) {
+        updateTask(todo.id, data);
+      } else {
+        data.id = Math.random().toString()
+        addTask(data);
+      }
+      onCloseModal(true)
       setFormData({ title: "", status: "", priority: "" });
+    };
+
+    const updateTask = (taskId: string, updatedTask: TaskType) => {
+      setTodoList(todoList.map(task => task.id === taskId ? updatedTask : task));
     };
 
     const handleInputChange = (field: string, value: string) => {
@@ -55,14 +68,15 @@ import { TaskType } from "@/lib/types/task";
 
     return (
       <Dialog open={isModalOpen}>
-        <DialogTrigger asChild>
-          <Button className="text-white" onClick={() => onOpenModal(true)}>Add task</Button>
-        </DialogTrigger>
+        {!hideTrigger && (
+          <DialogTrigger asChild>
+            <Button className="text-white" onClick={() => onOpenModal(true)}>Add task</Button>
+          </DialogTrigger>
+        )}
         <DialogContent>
           <DialogHeader>
             <DialogTitle>Add a Task</DialogTitle>
             <DialogDescription>Add a new task to your list</DialogDescription>
-
           </DialogHeader>
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="space-y-4">
@@ -78,7 +92,7 @@ import { TaskType } from "@/lib/types/task";
                       <SelectValue placeholder="Have you started?" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectGroup>
+                      <SelectGroup defaultValue={todo?.status}>
                         <SelectLabel>Status</SelectLabel>
                         <SelectItem value="yes">Yes</SelectItem>
                         <SelectItem value="no">No</SelectItem>
@@ -92,7 +106,7 @@ import { TaskType } from "@/lib/types/task";
                       <SelectValue placeholder="What is the priority" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectGroup>
+                      <SelectGroup defaultValue={todo?.priority}>
                         <SelectLabel>Priority</SelectLabel>
                         <SelectItem value="high">High</SelectItem>
                         <SelectItem value="medium">Medium</SelectItem>
