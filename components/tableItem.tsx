@@ -3,18 +3,18 @@
 import { Pencil, Trash2 } from "lucide-react"
 
 import { TaskType } from "@/lib/types/task"
-import { Button } from "./ui/button";
-import { useTodo } from "@/lib/contexts/todoContext";
-import { useState } from "react";
-import { AddTaskModal } from "./addTaskModal";
+import { Button } from "./ui/button"
+import { useTodo } from "@/lib/contexts/todoContext"
+import { useState } from "react"
+import { AddTaskModal } from "./addTaskModal"
 
 type TableItemProps = {
-  todo: TaskType;
-};
+  todo: TaskType
+}
 
 export const TableItem = ({ todo}: TableItemProps) => {
 
-    const { todoList, setTodoList } = useTodo();
+    const { todoList, setTodoList } = useTodo()
     const [isItemEditable, setIsItemEditable] = useState(false)
 
     const onClickTaskEdit = () => {

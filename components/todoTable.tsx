@@ -1,20 +1,19 @@
-'use client';
-import { TaskType } from "@/lib/types/task";
-import { TableItem } from "./tableItem";
-import { useTodo } from "@/lib/contexts/todoContext";
-import { useState } from "react";
+'use client'
+import { TableItem } from "./tableItem"
+import { useTodo } from "@/lib/contexts/todoContext"
+import { useState } from "react"
 
 export const TodoTable = () => {
-  const { todoList } = useTodo();
-  const [sortConfig, setSortConfig] = useState({ key: '', direction: 'asc' });
+  const { todoList } = useTodo()
+  const [sortConfig, setSortConfig] = useState({ key: '', direction: 'asc' })
   const [todos, setTodos] = useState(todoList)
 
   const sortData = (key: string) => {
-    let direction = 'asc';
+    let direction = 'asc'
     if (sortConfig.key === key && sortConfig.direction === 'asc') {
-      direction = 'desc';
+      direction = 'desc'
     }
-    setSortConfig({ key, direction });
+    setSortConfig({ key, direction })
 
     const sortedList = [...todoList].sort((a, b) => {
       if (key === 'priority') {
@@ -31,9 +30,9 @@ export const TodoTable = () => {
           : b.title.localeCompare(a.title)
       }
       return 0
-    });
+    })
     setTodos(sortedList)
-  };
+  }
 
 
   return (
@@ -54,5 +53,5 @@ export const TodoTable = () => {
         </tbody>
       </table>
     </div>
-  );
-};
+  )
+}
