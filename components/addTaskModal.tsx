@@ -1,4 +1,4 @@
-'use client';
+'use client'
 import {
     Dialog,
     DialogContent,
@@ -20,9 +20,9 @@ import {
 import { Input } from "@/components/ui/input"
 import { Button } from "./ui/button"
 import { DialogClose } from "@radix-ui/react-dialog"
-import { useState } from "react";
-import { TaskType } from "@/lib/types/task";
-import { useTodo } from "@/lib/contexts/todoContext";
+import { useState } from "react"
+import { TaskType } from "@/lib/types/task"
+import { useTodo } from "@/lib/contexts/todoContext"
 
   type AddTaskModalProps = {
     isModalOpen: boolean,
@@ -37,11 +37,11 @@ import { useTodo } from "@/lib/contexts/todoContext";
       title: todo?.title || "",
       status: todo?.status || "",
       priority: todo?.priority || "",
-    });
-    const { addTask, todoList, setTodoList } = useTodo();
+    })
+    const { addTask, todoList, setTodoList } = useTodo()
 
     const handleSubmit = (e: React.FormEvent) => {
-      e.preventDefault();
+      e.preventDefault()
       const data: TaskType = {
         id: todo?.id || "",
         title: formData.title,
@@ -49,22 +49,22 @@ import { useTodo } from "@/lib/contexts/todoContext";
         priority: formData.priority
       }
       if(todo) {
-        updateTask(todo.id, data);
+        updateTask(todo.id, data)
       } else {
         data.id = Math.random().toString()
-        addTask(data);
+        addTask(data)
       }
       onCloseModal(true)
-      setFormData({ title: "", status: "", priority: "" });
-    };
+      setFormData({ title: "", status: "", priority: "" })
+    }
 
     const updateTask = (taskId: string, updatedTask: TaskType) => {
-      setTodoList(todoList.map(task => task.id === taskId ? updatedTask : task));
-    };
+      setTodoList(todoList.map(task => task.id === taskId ? updatedTask : task))
+    }
 
     const handleInputChange = (field: string, value: string) => {
-      setFormData(prev => ({ ...prev, [field]: value }));
-    };
+      setFormData(prev => ({ ...prev, [field]: value }))
+    }
 
     return (
       <Dialog open={isModalOpen}>

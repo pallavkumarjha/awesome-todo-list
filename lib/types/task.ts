@@ -5,4 +5,4 @@ export type RootTask = {
     priority: string;
 };
 
-export type TaskType = RootTask & {};
+export type TaskType = RootTask & {}
