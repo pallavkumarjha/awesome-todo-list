@@ -1,17 +1,10 @@
-'use client';
-import { AddTaskModal } from "@/components/addTaskModal";
-import { Button } from "@/components/ui/button";
-import { TaskType } from "@/lib/types/task";
-import { useState } from "react";
+'use client'
+import { AddTaskModal } from "@/components/addTaskModal"
+import { TodoTable } from "@/components/todoTable"
+import { useState } from "react"
 
 export default function Home() {
-
-  const [isTaskModalOpen, setIsTaskModalOpen] = useState(false);
-
-  const onSubmitTaskModal = (task: TaskType) => {
-    console.log('data submitted', task)
-    setIsTaskModalOpen(false);
-  }
+  const [isTaskModalOpen, setIsTaskModalOpen] = useState(false)
 
   return (
       <div className="container mx-auto px-4 py-8">
@@ -21,10 +14,9 @@ export default function Home() {
             isModalOpen={isTaskModalOpen}
             onOpenModal={setIsTaskModalOpen}
             onCloseModal={setIsTaskModalOpen}
-            onSubmitModal={onSubmitTaskModal}
           />
+          <TodoTable />
         </div>
-        
       </div>
-  );
+  )
 }
