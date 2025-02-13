@@ -1,14 +1,15 @@
 'use client';
 import { AddTaskModal } from "@/components/addTaskModal";
 import { Button } from "@/components/ui/button";
+import { TaskType } from "@/lib/types/task";
 import { useState } from "react";
 
 export default function Home() {
 
   const [isTaskModalOpen, setIsTaskModalOpen] = useState(false);
 
-  const onSubmitTaskModal = () => {
-    console.log('data submitted')
+  const onSubmitTaskModal = (task: TaskType) => {
+    console.log('data submitted', task)
     setIsTaskModalOpen(false);
   }
 
