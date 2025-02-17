@@ -13,9 +13,10 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { TODOS_COLUMNS } from "@/lib/constants"
+import { CustomFieldsEditor } from "./customFieldsEditor"
 
 export const TodoTable = () => {
-  const { todoList } = useTodo()
+  const { todoList, customFields } = useTodo()
   const [sortConfig, setSortConfig] = useState({ key: '', direction: 'asc' })
   const [todos, setTodos] = useState(todoList)
   const [filteredStatus, setFilteredStatus] = useState('')
@@ -27,6 +28,7 @@ export const TodoTable = () => {
   }, [todoList])
 
   const sortData = (key: string) => {
+    const isCustomField = customFields.some(field => field.id === key)
     let direction = 'asc'
     if (sortConfig.key === key && sortConfig.direction === 'asc') {
       direction = 'desc'
@@ -46,6 +48,17 @@ export const TodoTable = () => {
         return direction === 'asc'
           ? a.title.localeCompare(b.title)
           : b.title.localeCompare(a.title)
+      } else if (isCustomField) {
+        const aValue = a.customFields?.find(f => f.fieldId === key)?.value
+        const bValue = b.customFields?.find(f => f.fieldId === key)?.value
+        if (typeof aValue === 'boolean' || typeof bValue === 'boolean') {
+          return direction === 'asc'
+            ? (aValue === bValue ? 0 : aValue ? -1 : 1)
+            : (aValue === bValue ? 0 : aValue ? 1 : -1)
+        }
+        return direction === 'asc'
+          ? String(aValue || '').localeCompare(String(bValue || ''))
+          : String(bValue || '').localeCompare(String(aValue || ''))
       }
       return 0
     })
@@ -117,7 +130,10 @@ export const TodoTable = () => {
       <table className="w-full border-collapse bg-white dark:bg-black/[.1] shadow-sm rounded-lg overflow-hidden">
         <thead className="bg-gray-50 dark:bg-gray-800">
           <tr>
-            {TODOS_COLUMNS.map((column) => (
+            {[...TODOS_COLUMNS.slice(0, -1), ...customFields.map(field => ({
+              id: field.id,
+              title: field.name
+            })), TODOS_COLUMNS[TODOS_COLUMNS.length - 1]].map((column) => (
               <th key={column.id} onClick={() => sortData(column.id)} className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider cursor-pointer">
                 <div className="flex items-center gap-1">
                   {column.title}

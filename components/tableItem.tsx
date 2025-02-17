@@ -14,7 +14,7 @@ type TableItemProps = {
 }
 
 export const TableItem = ({ todo}: TableItemProps) => {
-    const { todoList, setTodoList, deleteTask } = useTodo()
+    const { deleteTask } = useTodo()
     const [isItemEditable, setIsItemEditable] = useState(false)
     const [showDeleteDialog, setShowDeleteDialog] = useState(false)
 
@@ -28,8 +28,6 @@ export const TableItem = ({ todo}: TableItemProps) => {
 
     const handleConfirmDelete = () => {
         deleteTask(todo.id!)
-        // const newTaskList = todoList.filter((task) => task.id !== todo.id)
-        // setTodoList(newTaskList)
         setShowDeleteDialog(false)
     }
 
@@ -37,8 +35,15 @@ export const TableItem = ({ todo}: TableItemProps) => {
         <>
             <tr key={todo.id} className="hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors">
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-300">{todo.title}</td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-300">{todo.priority}</td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-300">{todo.status}</td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-300">{todo.priority}</td>
+                {useTodo().customFields.map(field => (
+                    <td key={field.id} className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-300">
+                        {field.type === 'checkbox' 
+                            ? (todo.customFields?.find(f => f.fieldId === field.id)?.value ? '✓' : '✗')
+                            : todo.customFields?.find(f => f.fieldId === field.id)?.value || '-'}
+                    </td>
+                ))}
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-300">
                     <div>
                         <Button className="text-blue bg-transparent shadow-none" onClick={onClickTaskEdit}>

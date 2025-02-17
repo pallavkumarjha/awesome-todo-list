@@ -23,6 +23,7 @@ import { DialogClose } from "@radix-ui/react-dialog"
 import { useState } from "react"
 import { TaskType } from "@/lib/types/task"
 import { useTodo } from "@/lib/contexts/todoContext"
+import { CustomFieldValue } from "@/lib/types/customField"
 
   type AddTaskModalProps = {
     isModalOpen: boolean,
@@ -37,8 +38,9 @@ import { useTodo } from "@/lib/contexts/todoContext"
       title: todo?.title || "",
       status: todo?.status || "",
       priority: todo?.priority || "",
+      customFields: todo?.customFields || []
     })
-    const { addTask, todoList, setTodoList } = useTodo()
+    const { addTask, todoList, setTodoList, customFields } = useTodo()
 
     const handleSubmit = (e: React.FormEvent) => {
       e.preventDefault()
@@ -46,7 +48,8 @@ import { useTodo } from "@/lib/contexts/todoContext"
         id: todo?.id || "",
         title: formData.title,
         status: formData.status,
-        priority: formData.priority
+        priority: formData.priority,
+        customFields: formData.customFields
       }
       if(todo) {
         updateTask(todo.id, data)
@@ -55,7 +58,7 @@ import { useTodo } from "@/lib/contexts/todoContext"
         addTask(data)
       }
       onCloseModal(true)
-      setFormData({ title: "", status: "", priority: "" })
+      setFormData({ title: "", status: "", priority: "", customFields: [] })
     }
 
     const updateTask = (taskId: string, updatedTask: TaskType) => {
@@ -64,6 +67,20 @@ import { useTodo } from "@/lib/contexts/todoContext"
 
     const handleInputChange = (field: string, value: string) => {
       setFormData(prev => ({ ...prev, [field]: value }))
+    }
+
+    const handleCustomFieldChange = (fieldId: string, value: string | number | boolean) => {
+      setFormData(prev => ({
+        ...prev,
+        customFields: [
+          ...prev.customFields.filter(field => field.fieldId !== fieldId),
+          { fieldId, value }
+        ]
+      }))
+    }
+
+    const getCustomFieldValue = (fieldId: string) => {
+      return formData.customFields.find(field => field.fieldId === fieldId)?.value || ""
     }
 
     return (
@@ -116,10 +133,41 @@ import { useTodo } from "@/lib/contexts/todoContext"
                     </SelectContent>
                   </Select>
                 </div>
+                {customFields.map(field => (
+                  <div key={field.id}>
+                    {field.type === 'text' && (
+                      <Input
+                        placeholder={field.name}
+                        value={getCustomFieldValue(field.id)}
+                        onChange={(e) => handleCustomFieldChange(field.id, e.target.value)}
+                      />
+                    )}
+                    {field.type === 'number' && (
+                      <Input
+                        type="number"
+                        placeholder={field.name}
+                        value={getCustomFieldValue(field.id)}
+                        onChange={(e) => handleCustomFieldChange(field.id, Number(e.target.value))}
+                      />
+                    )}
+                    {field.type === 'checkbox' && (
+                      <div className="flex items-center gap-2">
+                        <input
+                          type="checkbox"
+                          id={field.id}
+                          checked={Boolean(getCustomFieldValue(field.id))}
+                          onChange={(e) => handleCustomFieldChange(field.id, e.target.checked)}
+                          className="w-4 h-4"
+                        />
+                        <label htmlFor={field.id}>{field.name}</label>
+                      </div>
+                    )}
+                  </div>
+                ))}
               </div>
               <DialogFooter className="sm:justify-start">
                 <Button type="submit" disabled={!formData.title || !formData.status || !formData.priority}>
-                  Add Task
+                  { todo?.id ? 'Add Task' : 'Edit task'}
                 </Button>
                 <DialogClose asChild>
                   <Button onClick={() => onCloseModal(false)} type="button" variant="secondary">

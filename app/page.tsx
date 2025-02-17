@@ -1,5 +1,6 @@
 'use client'
 import { AddTaskModal } from "@/components/addTaskModal"
+import { CustomFieldsEditor } from "@/components/customFieldsEditor"
 import { TodoTable } from "@/components/todoTable"
 import { useState } from "react"
 
@@ -15,6 +16,9 @@ export default function Home() {
             onOpenModal={setIsTaskModalOpen}
             onCloseModal={setIsTaskModalOpen}
           />
+          <div className="flex justify-end mb-4">
+            <CustomFieldsEditor />
+          </div>
           <TodoTable />
         </div>
       </div>
