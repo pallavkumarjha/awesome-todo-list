@@ -1,36 +1,93 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Awesome Todo List
+
+A modern, feature-rich todo list application built with Next.js and TypeScript. Manage your tasks efficiently with custom fields, sorting, and filtering capabilities.
+
+## Features
+
+- ✨ Create, edit, and delete tasks
+- 🔄 Track task status (Started/Not Started)
+- 🎯 Set task priorities (High/Medium/Low/None)
+- 🔍 Filter tasks by title, status, and priority
+- ↕️ Sort tasks by any column
+- 🎨 Custom fields support
+  - Add text, number, or checkbox fields
+  - Customize your task tracking
+  - Manage custom fields easily
+- 💾 Persistent storage using localStorage
+- 🌙 Dark mode support
+- 📱 Responsive design
+
+## Technology Stack
+
+- Next.js 13+ with App Router
+- TypeScript
+- Tailwind CSS
+- Radix UI Components
+- Lucide Icons
+- Context API for state management
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
 
+- Node.js 16.8 or later
+- npm or yarn package manager
+
+### Installation
+
+1. Clone the repository:
+```bash
+git clone https://github.com/yourusername/awesome-todo-list.git
+cd awesome-todo-list
+```
+
+2. Install dependencies:
+```bash
+npm install
+# or
+yarn install
+```
+
+3. Start the development server:
 ```bash
 npm run dev
 # or
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+4. Open [http://localhost:3000](http://localhost:3000) in your browser
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Usage
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Managing Tasks
 
-## Learn More
+1. Click "Add task" to create a new task
+2. Fill in the task details:
+   - Title (required)
+   - Status (required)
+   - Priority (required)
+   - Custom field values (optional)
+3. Click "Add Task" to save
 
-To learn more about Next.js, take a look at the following resources:
+### Custom Fields
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. Click "Manage Custom Fields" to open the custom fields editor
+2. Add new fields by:
+   - Entering a field name
+   - Selecting a field type (text, number, or checkbox)
+   - Clicking "Add"
+3. Remove existing fields using the delete button
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Filtering and Sorting
 
-## Deploy on Vercel
+- Use the search bar to filter tasks by title
+- Use the status and priority dropdowns to filter by those attributes
+- Click on any column header to sort by that column
+- Click again to reverse the sort order
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Missing features
+ - Unit tests
+ - Pagination implementation
+ - All bonus milestones
+ - Relevant comments in the repo are not present
+ - There are few bugs in the app (like x button in the modal doesn't close it etc), didn't get time to fix them
