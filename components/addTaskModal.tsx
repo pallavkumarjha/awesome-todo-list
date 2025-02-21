@@ -137,7 +137,7 @@ import { useTodo } from "@/lib/contexts/todoContext"
                     {field.type === 'text' && (
                       <Input
                         placeholder={field.name}
-                        value={getCustomFieldValue(field.id)}
+                        value={getCustomFieldValue(field.id) as string}
                         onChange={(e) => handleCustomFieldChange(field.id, e.target.value)}
                       />
                     )}
@@ -145,7 +145,7 @@ import { useTodo } from "@/lib/contexts/todoContext"
                       <Input
                         type="number"
                         placeholder={field.name}
-                        value={getCustomFieldValue(field.id)}
+                        value={getCustomFieldValue(field.id) as string}
                         onChange={(e) => handleCustomFieldChange(field.id, Number(e.target.value))}
                       />
                     )}

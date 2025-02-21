@@ -63,7 +63,7 @@ export const CustomFieldsEditor = () => {
                         />
                         <Select
                             value={newField.type}
-                            onValueChange={(value) => setNewField({ ...newField, type: value })}>
+                            onValueChange={(value: 'text' | 'number' | 'checkbox') => setNewField({ ...newField, type: value })}>
                             <SelectTrigger className="w-[180px]">
                                 <SelectValue placeholder="Select type" />
                             </SelectTrigger>
