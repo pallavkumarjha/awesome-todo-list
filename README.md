@@ -14,8 +14,7 @@ A modern, feature-rich todo list application built with Next.js and TypeScript. 
   - Customize your task tracking
   - Manage custom fields easily
 - 💾 Persistent storage using localStorage
-- 🌙 Dark mode support
-- 📱 Responsive design
+
 
 ## Technology Stack
 
