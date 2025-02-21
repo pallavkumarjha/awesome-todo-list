@@ -23,7 +23,6 @@ import { DialogClose } from "@radix-ui/react-dialog"
 import { useState } from "react"
 import { TaskType } from "@/lib/types/task"
 import { useTodo } from "@/lib/contexts/todoContext"
-import { CustomFieldValue } from "@/lib/types/customField"
 
   type AddTaskModalProps = {
     isModalOpen: boolean,

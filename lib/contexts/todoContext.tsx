@@ -2,7 +2,7 @@
 import { createContext, useContext, useState, useEffect } from 'react'
 import { TaskType } from '../types/task'
 
-import { CustomFieldType, CustomFieldsState } from '../types/customField'
+import { CustomFieldType } from '../types/customField'
 
 type TodoContextType = {
   todoList: TaskType[]

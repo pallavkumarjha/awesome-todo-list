@@ -13,7 +13,6 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { TODOS_COLUMNS } from "@/lib/constants"
-import { CustomFieldsEditor } from "./customFieldsEditor"
 
 export const TodoTable = () => {
   const { todoList, customFields } = useTodo()
